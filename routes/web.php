@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaginasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Ruta Raíz (Principal)
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/presentacion/{nombre}/{apellido?}', [PaginasController::class, 'presentacion']);
+Route::get('/contacto', [PaginasController::class, 'contacto'])->name('contacto');
+Route::get('/informacion', [PaginasController::class, 'informacion'])->name('info');
+Route::post('/contacto', [PaginasController::class, 'recibeContacto'])->name('recibe-contacto');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
